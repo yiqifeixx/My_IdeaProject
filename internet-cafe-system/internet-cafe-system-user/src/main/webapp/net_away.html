@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网吧管理系统</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/search.css">
+    <link rel="stylesheet" href="css/tips.css">
+
+    <script src='js/jquery.min.js'></script>
+    <script src="js/tips.js"></script>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
+    <!--<script src="js/jquery-3.3.1.js"></script>-->
+    <script src="js/bootstrap.min.js"></script>
+    <!--导入布局js，共享header-->
+    <script type="text/javascript" src="js/include.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            //点击弹窗
+            $(".search-button").click(function() {
+                $('.info').css('display', 'block');
+                $('.mask').css('display', 'block');
+            });
+
+            $(".mask").click(function() {
+                $('.info').css('display', 'none');
+                $('.mask').css('display', 'none');
+            });
+        });
+
+        $(function () {
+            //1.给提交按钮绑定单击事件
+            $("#search_btn").click(function () {
+                //2.发送ajax请求，提交表单数据
+                $.post("user/search",$("#searchForm").serialize(),function (data) {
+                    if(data!=null){
+                        //查询成功
+                        $("#td_right").html(data.username+"<br/>***<br/>"+data.name+"<br/>"+data.telephone+"<br/>"+data.sex+"<br/>"+data.birthday+"<br/>"+data.money);
+                        //1.给提交按钮绑定单击事件
+                        $("#btn_sub").click(function () {
+                            $.post("user/away",$("#searchForm").serialize(),function (data) {
+                                if (data.flag){
+                                    alert(data.errorMsg);
+                                }else {
+                                    alert(data.errorMsg);
+                                }
+                            });
+                        });
+                    }else{
+                        //查询失败
+                        alert("您输入的信息有误!")
+                    }
+                });
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+<!--引入头部-->
+<div id="header"></div>
+
+<div class="search-box">
+    <h1 style="text-align: center; background-color: #9acfea; color:#fff;">网费赠送</h1>
+    <!--登录错误提示消息-->
+    <div id="errorMsg" class="alert" style="color: red" ></div>
+    <div style=" width:386px; height:332px; margin-left:auto; margin-right:auto">
+        <form id="searchForm" action="" method="post" accept-charset="utf-8">
+            <input type="hidden" name="action" value="login"/>
+            <input name="username" type="text" placeholder="请输入被赠送者用户名" autocomplete="off"><br/>
+            <input name="money" type="text" placeholder="请输入赠送金额" autocomplete="off">
+
+            <div class="submit_btn">
+                <button type="button" id="search_btn" class="search-button">查 询</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="hottel">
+        <div class="hot_pic">
+            <img src="images/hot_tel.jpg" alt="">
+        </div>
+        <div class="hot_tel">
+            <p class="hot_time">管理员电话(9:00-6:00)</p>
+            <p class="hot_num">400-618-9090</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="mask">
+
+</div>
+<div class="info">
+    <table style="margin-left: 150px; margin-top: 30px">
+        <tr>
+            <td class="td_left">
+                <label>用户名:</label><br/>
+                <label>密码:</label><br/>
+                <label>姓名:</label><br/>
+                <label>手机号:</label><br/>
+                <label>性别:</label><br/>
+                <label>出生日期:</label><br/>
+                <label>用户当前余额:</label>
+            </td>
+            <td class="td_right" id="td_right" >
+            </td>
+        </tr>
+        <tr>
+            <td class="td_left">
+            </td>
+            <td class="td_right">
+                <button type="button" class="btn_sub" id="btn_sub">提 交</button>
+            </td>
+        </tr>
+    </table>
+    点击任意位置关闭
+</div>
+
+<!-- 右下角消息提示框 -->
+<div class="tips"></div>
+<script>
+    $('#search_btn').on('click',function () {
+        // 以下属性 字符串类型的必须是string 但 Number类型的属性值传入string类型也可以
+        $('.tips').initTips({
+            title: "来自网吧管家的提醒", // head头部显示的标题内容
+            message:"如有疑问，可通过下方电话联系管理员",// 内容区域 动态生成div时,将根据ajax获取的数据并拼接好的html字符串放到此处即可
+            duration:5000, // 提示框停留时间(毫秒为单位)  默认值为5000ms
+            firstSpace:8, // 第一个提示框距离页面 上方或(下,左,右)的距离 (默认值为8)
+            margin:15, // 提示框 距离左右两边的距离 (默认值15px)
+            toastType:'error',// 提示类型 有四个样式可选 info warning error success(默认info)
+            width:300, // 提示框宽度,默认为auto不换行
+            height:10,
+            limit:4, // 限制提示框数量(默认值为4)
+            timingFun:'linear',// 动画运动曲线(默认值为ease)
+            direction:'right bottom', // 提示框滑出方向默认right bottom
+        });
+    });
+</script>
+
+</body>
+</html>

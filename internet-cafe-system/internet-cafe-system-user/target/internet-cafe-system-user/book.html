@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>网吧管理系统</title>
+
+	<link rel="stylesheet" type="text/css" href="css/jquery.step.css" />
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" href="css/tips.css">
+
+	<script src='js/jquery.min.js'></script>
+	<script src="js/tips.js"></script>
+
+	<!--导入布局js，共享header-->
+	<script type="text/javascript" src="js/include.js"></script>
+	<script src="js/jquery.step.min.js"></script>
+
+	<style>
+		button {
+			display: inline-block;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			text-align: center;
+			cursor: pointer;
+			border: 1px solid transparent;
+			border-radius: 4px;
+			color: #fff;
+			background-color: #5bc0de;
+		}
+
+		.main {
+			width: 1000px;
+			margin: 100px auto;
+		}
+
+		#step {
+			margin-bottom: 60px;
+		}
+
+		.btns {
+			float: left;
+		}
+		.box{
+			width: 430px;
+			height: 1200px;
+			margin-left: 20%;
+			margin-top: 150px;
+		}
+
+	</style>
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<div class="main">
+	<div><h1>预约星期三，全天半价</h1><br/>
+		 <h3>预约后，请最迟在当天上午10：00前准时到达</h3></div>
+	<div id="step"></div>
+	<div class="btns">
+		<button id="nextBtn">开始预约</button>
+		<button id="nextBtn1">开始查询</button>
+		<button id="nextBtn2">确认预约</button>
+	</div>
+</div>
+
+<div class="box">
+	<h5 style="color: yellowgreen">您已成功预约的机型：</h5>
+	<div id="computer_name"></div>
+</div>
+
+<script>
+	//查询已预约
+	$.get("book/findComputer",{},function (datas) {
+		var str = "";
+		for (var i = 0; i < datas.length; i++) {
+			var data = datas[i];
+			for(var key in data){
+				str += data[key]+'号机型已预约';;
+				str +="<br/>";
+			}
+		}
+		$("#computer_name").html(str);
+	});
+</script>
+
+<script type="text/javascript">
+
+	var step1 = $("#step");
+
+	step1.step({
+		time: 500,
+		title: ["您已进入预约系统", "预约已开始", "当前查询到", "已确认"]
+	});
+
+	$("#nextBtn1").prop("disabled",true);
+	$("#nextBtn2").prop("disabled",true);
+
+
+	$("#nextBtn").on("click", function() {
+		$("#nextBtn").prop("disabled",true);
+		$("#nextBtn1").prop("disabled",false);
+		$("#nextBtn2").prop("disabled",true);
+		step1.nextStep();
+		index1.text(step1.getIndex());
+
+	});
+
+	//查询操作
+	$("#nextBtn1").on("click", function() {
+		$("#nextBtn").prop("disabled",true);
+		$("#nextBtn1").prop("disabled",true);
+		$.get("book/queryComputer",{},function (data) {
+			if (data.flag){
+				alert('当前查询到'+data.id+'号计算机空闲中，您可点击确认预约按钮完成预约');
+				$("#nextBtn2").prop("disabled",false);
+			}else {
+				alert(data.errorMsg);
+				$("#nextBtn2").prop("disabled",true);
+			}
+		});
+		step1.nextStep();
+		index1.text(step1.getIndex());
+	});
+
+	//预约操作
+	$("#nextBtn2").on("click", function() {
+		$("#nextBtn").prop("disabled",true);
+		$("#nextBtn1").prop("disabled",true);
+		$("#nextBtn2").prop("disabled",true);
+
+		$.post("book/bookComputer",{},function (data) {
+			if (data.flag){
+				alert("恭喜预约成功");
+			}else {
+				alert(data.errorMsg);
+			}
+		});
+		step1.nextStep();
+		index1.text(step1.getIndex());
+	});
+
+</script>
+
+<div style="text-align:center;margin:150px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+
+</div>
+</body>
+</html>

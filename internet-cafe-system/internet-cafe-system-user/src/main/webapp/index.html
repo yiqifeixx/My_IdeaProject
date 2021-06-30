@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>网吧管理系统</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--导入布局js，共享header-->
+    <script type="text/javascript" src="js/include.js"></script>
+
+    <!--<script>
+        var maxtime = 3600 ;
+        function CountDown() {
+            if (maxtime >= 0) {
+                var days = Math.floor(maxtime / (60 * 60 * 24));
+                var hours = Math.floor(maxtime /(60 * 60)) - (days * 24);
+                var minutes = Math.floor(maxtime /60) - (days * 24 * 60) - (hours * 60);
+                var seconds = Math.floor(maxtime) - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+                $('#day_show').html('<s></s>'+days+'天');
+                $('#hour_show').html('<s></s>'+hours+'时');
+                $('#minute_show').html('<s></s>'+minutes+'分');
+                $('#second_show').html('<s></s>'+seconds+'秒');
+                if (maxtime == 5 * 60)alert("还剩5分钟");
+                &#45;&#45;maxtime;
+            } else{
+                clearInterval(timer);
+                alert("时间到，结束!");
+            }
+        }
+        timer = setInterval("CountDown()", 1000);
+    </script>-->
+
+</head>
+<body>
+<!--引入头部-->
+<div id="header"></div>
+
+<!-- 轮播图-->
+<div id="lunbotu"></div>
+
+<section id="content">
+    <!--start-->
+    <section class="hemai_jx">
+        <div class="jx_top">
+            <div class="jx_tit">
+                <span class="last_time">网吧管理促进行业发展</span>
+            </div>
+
+            <ul class="jx_tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <span></span>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <!-- Tab panes -->
+            <!--<div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="popularity">
+                    <div class="time-item">
+                        <span id="day_show">0天</span>
+                        <strong id="hour_show">0时</strong>
+                        <strong id="minute_show">0分</strong>
+                        <strong id="second_show">0秒</strong>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="newest">
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="theme">
+
+                </div>
+            </div>-->
+            <img src = "images/index01.png" width="1200"/>
+        </div>
+    </section>
+
+    <section class="hemai_jx">
+        <div class="jx_top">
+            <div class="jx_tit">
+                <span class="last_time">营造城市文明网吧</span>
+            </div>
+        </div>
+        <div>
+            1、无烟草广告，室内公共场所和工作场所有明显禁烟标识，没有吸烟现象。<br/>
+            2、显著位置悬挂《网络文化经营许可证》和营业执照。<br/>
+            3、实名登记。<br/>
+            4、显著位置设有未成年人不得入内警示牌。<br/>
+            5、无未成年人上网。<br/>
+            6、环境卫生干净整洁，无脏乱差现象。
+        </div>
+    </section>
+
+    <section class="hemai_jx">
+        <div class="jx_top">
+            <div class="jx_tit">
+                <span class="last_time">规范行为</span>
+            </div>
+        </div>
+        <div>
+            自觉规范上网行为是每个公民应尽的责任。
+        </div>
+    </section>
+</section>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网吧管理系统</title>
+    <!-- 日期Daterange picker -->
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <!-- 日期控件 -->
+    <script src="/js/bootstrap-datetimepicker.js"></script>
+    <script src='/js/bootstrap-datetimepicker.zh-CN.js'></script>
+    <script>
+        $(function () {
+            $('#starttime').datetimepicker({
+                format : 'yyyy-mm-dd hh:ii',
+                language : 'zh-CN',
+                weekStart : 1,
+                todayBtn : 1,
+                autoclose : 1,
+                todayHighlight : 1,
+                startView : 2,//日期时间选择器打开之后首先显示的视图。 可接受的值：//0 分钟视图；1小时
+                minView : 0, //日期时间选择器所能够提供的最精确的时间选择视图
+                minuteStep:1,//分钟
+                formatViewType : 'time'
+            }).on('hide', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var startTime = event.date;
+                $("#expirationDate").datetimepicker('setStartDate',startTime);
+                $("#expirationDate").val("");
+            });
+
+            $('#expirationDate').datetimepicker({
+                format : 'yyyy-mm-dd hh:ii',
+                language : 'zh-CN',
+                weekStart : 1,
+                todayBtn : 1,
+                autoclose : 1,
+                todayHighlight : 1,
+                startView : 2,//日期时间选择器打开之后首先显示的视图。 可接受的值：//0 分钟视图；1小时
+                minView : 0, //日期时间选择器所能够提供的最精确的时间选择视图
+                minuteStep:1,//分钟
+                formatViewType : 'time'
+            }).on('hide', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var endTime = event.date;
+                $("#startDate").datetimepicker('setEndDate',endTime);
+            });
+        });
+
+    </script>
+</head>
+<body>
+
+<h3>预约前请注意！！！本次预约押金为1元</h3>
+<h5>上机时，押金可抵做部分网费，超时押金将不会退回。</h5>
+
+<input name="username" type="text" placeholder="请输入您的账号" autocomplete="off"><br/>
+<input name="password" type="text" placeholder="请输入将要预约的计算机号码" autocomplete="off"><br/>
+请选择开始与结束时间<br/>
+<input class="form-control" type="text" value="" id="starttime" readonly><br/>
+<input class="form-control" type="text" value="" id="expirationDate" readonly>
+
+</body>
+</html>

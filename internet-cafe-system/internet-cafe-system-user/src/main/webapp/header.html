@@ -1,0 +1,40 @@
+
+<header id="header">
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.css">
+
+    <script>
+        $(function () {
+            //查询用户名
+            $.get("user/findOne", {}, function (data) {
+                var msg = "欢迎回来，" + data.username;
+                $("#span_username").html(msg);
+            });
+        });
+    </script>
+
+<div class="shortcut">
+   <!--登录状态-->
+    <div class="login">
+        <span id="span_username"></span>
+        <span>/</span>
+        <a href="javascript:location.href='user/exit'">退出登录</a>
+    </div>
+</div>
+
+<div class="navitem">
+    <!--&lt;!&ndash;类nav清除列表的默认样式  nav-tabs定义tabs的标题栏&ndash;&gt;-->
+    <ul class="nav nav-tabs">
+        <li class="nav-active"><a href="index.html">首页</a></li>
+        <li><a href="net_manage.html" data-toggle="popover">网费查询</a></li>
+        <li><a href="net_away.html" data-toggle="popover">网费赠送</a></li>
+        <li><a href="book.html" data-toggle="popover">预约上机</a></li>
+        <li><a href="order.html" data-toggle="popover">留言点餐</a></li>
+        <li><a href="about.html" data-toggle="popover">关于我们</a></li>
+    </ul>
+</div>
+
+</header>
+

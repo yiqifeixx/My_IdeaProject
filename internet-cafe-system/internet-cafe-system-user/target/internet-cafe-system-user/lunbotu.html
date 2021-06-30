@@ -1,0 +1,141 @@
+<lubotu id="lunbotu">
+    <style>
+        .box{
+            width: 1200px;
+            height: 450px;
+            margin: 5px auto;
+            position: relative;
+        }
+        .box div{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+        .box div img{
+            width: 1200px;
+            height: 450px;
+        }
+
+        .box span{
+            width: 40px;
+            height: 80px;
+            position: absolute;
+            top:50%;
+            font-size: 20px;
+            text-align: center;
+            line-height: 80px;
+            color: #ccc;
+            background: #333;
+            opacity: .2;cursor: pointer;
+            transform: translateY(-50%)
+        }
+
+        /*清除小黑点*/
+        ul li{
+            list-style-type:none
+        }
+        .left{
+            left: 0;
+        }
+        .right{
+            right:0;
+        }
+    </style>
+
+    <div class="box">
+        <div style = "opacity: 1"><img src="images/01.png"></div>
+        <div><img src="images/02.jpg"></div>
+        <div><img src="https://www.apple.com/v/ipad/home/bk/images/overview/hero/ipad_pro_hero__dp32paa1qmi6_large_2x.jpg" ></div>
+        <div><img src="https://www.apple.com/v/ipad/home/bk/images/overview/ipad_for_business__bt0mseawn2s2_large_2x.jpg"></div>
+        <div><img src="https://www.apple.com/v/ipad/home/bk/images/overview/apple_card_tile/tile_apple_card__bazf40ef04wy_large_2x.jpg"></div>
+
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+
+        <span class="left"><</span>
+        <span class="right">></span>
+    </div>
+
+    <script>
+        class Banner{
+            constructor(){
+                this.box=document.querySelector(".box");
+                this.divs=document.querySelectorAll(".box div");
+                this.lis =document.querySelectorAll("li");
+                this.left=document.querySelector(".left");
+                this.right=document.querySelector(".right");
+                this.time=null;
+                this.index=0;
+                // 自动切换
+                this.automatic();
+                // 添加事件
+                this.addEvent();
+            }
+
+            automatic(){
+                var that =this;
+                this.time=setInterval(function(){
+                    that.index++;
+                    if(that.index>that.divs.length-1){
+                        that.index=0
+                    }
+                    for(var i=0;i<that.divs.length;i++){
+                        that.divs[i].style.opacity=0;
+                        that.lis[i].className="";
+                    }
+                    that.divs[that.index].style.opacity=1;
+                },2000)
+            }
+            addEvent(){
+                var that =this;
+                // 添加左按钮事件
+                this.left.onclick=function(){
+                    that.leftclick();
+                }
+                // 添加右按钮事件
+                this.right.onclick=function(){
+                    that.rightclick()
+                }
+            }
+            leftclick(){
+                // 点击之后先清除计时器
+                clearInterval(this.time);
+                this.index--;
+                if(this.index <0){
+                    this.index = this.divs.length-1;
+                }
+                this.clickmove();
+            }
+            rightclick(){
+                clearInterval(this.time);
+                this.index++;
+                if(this.index>this.divs.length-1){
+                    this.index=0
+                }
+                this.clickmove();
+            }
+            clickmove(){
+                console.log(this.index)
+                for(var i=0;i<this.divs.length;i++){
+                    this.divs[i].style.opacity=0;
+                    this.lis[i].className="";
+                }
+                this.divs[this.index].style.opacity=1;
+                this.lis[this.index].className="show";
+                // 点击事件后再开启自动播放
+                this.automatic();
+            }
+        }
+        new Banner();
+    </script>
+
+</lubotu>

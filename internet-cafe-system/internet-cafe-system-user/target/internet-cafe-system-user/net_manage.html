@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>网吧管理系统</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" href="css/tips.css">
+
+    <script src='js/jquery.min.js'></script>
+    <script src="js/tips.js"></script>
+    <!--<script src="js/jquery-3.3.1.js"></script>-->
+    <script src="js/bootstrap.min.js"></script>
+    <!--导入布局js，共享header-->
+    <script type="text/javascript" src="js/include.js"></script>
+
+    <style>
+        .box{
+            width: 880px;
+            height: 1200px;
+            margin: 5px auto;
+            position: relative;
+        }
+        input{
+            display: inline-block;
+            width: 250px;
+            height: 35px;
+            border: 1px solid #d8d8d8;
+            font-size: 14px;
+            color: #666;
+            line-height: 28px;
+            padding: 6px 0 6px 12px;
+            box-shadow: 0 0 5px #fff;
+            outline: none;
+            transition: box-shadow 0.25s linear 0s;
+            -webkit-transition: box-shadow 0.25s linear 0s;
+            margin-bottom: 17px;
+        }
+        .submit_que {
+            background-color:cornflowerblue;
+            margin-top: 15px;
+            padding:10px;
+            width:80px;
+            text-align:center;
+            color:#fff;
+            border: none;
+        }
+    </style>
+
+
+    <script>
+        $(function () {
+            //1.给登录按钮绑定单击事件
+            $("#btn_sub").click(function () {
+                //2.发送ajax请求，提交表单数据
+                $.post("user/balance",$("#loginForm").serialize(),function (data) {
+                    //data : {flag:false,errorMsg:''}
+                    if(data!=null){
+                        $("#errorMsg").html("您的余额为："+data.money);
+                    }else{
+                        //登录失败
+                        $("#errorMsg").html("您输入的信息有误");
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+<!--引入头部-->
+<div id="header"></div>
+
+<div class="box">
+        <h1 style="text-align: center; background-color: #9acfea; color:#fff;">网费查询</h1>
+        <!--登录错误提示消息-->
+        <div id="errorMsg" class="alert alert-danger" ></div>
+        <form id="loginForm" action="" method="post" accept-charset="utf-8">
+            <input type="hidden" name="action" value="login"/>
+            <input name="username" type="text" placeholder="请输入账号" autocomplete="off"><br/>
+            <input name="password" type="text" placeholder="请输入密码" autocomplete="off">
+
+            <div class="submit_btn">
+                <button type="button" class="submit_que" id="btn_sub" >余额查询</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 右下角消息提示框 -->
+<div class="tips"></div>
+<script>
+    $('#btn_sub').on('click',function () {
+        $('.tips').initTips({
+            title: "来自网吧管家的提醒",
+            message:"请注意随时随地保护好隐私哦！！！",
+            duration:5000,
+            firstSpace:8,
+            margin:15,
+            toastType:'warning',
+            width:300,
+            height:10,
+            limit:4,
+            timingFun:'linear',
+            direction:'right bottom',
+        });
+    });
+</script>
+</body>
+</html>

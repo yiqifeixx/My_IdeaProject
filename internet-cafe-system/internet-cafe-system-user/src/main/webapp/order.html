@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网吧管理系统</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/search.css">
+
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
+    <script src="js/jquery-3.3.1.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <!--导入布局js，共享header-->
+    <script type="text/javascript" src="js/include.js"></script>
+
+    <style>
+        .box{
+            width: 880px;
+            height: 1200px;
+            margin: 10px auto;
+            position: relative;
+        }
+        .btn_sub{
+            border: none;
+            background-color:cornflowerblue;padding:10px;
+            width:80px;
+            text-align:center;
+            color:#fff;
+        }
+        .btn_res{
+            border: none;
+            background-color:cornflowerblue;padding:10px;
+            width:80px;
+            text-align:center;
+            color:#fff;
+            margin-left: 30px;
+        }
+    </style>
+
+    <script>
+
+        $(function () {
+            //接收公告信息
+            $.get("socket/queryOrder",{},function (data) {
+                $("#message").html(data[0].menu);
+            });
+
+            //发送留言
+            $("#btn_sub").click(function () {
+                $.post("socket/saveMessage",{message:$("#socketMsg").val()},function (data) {
+                    if (data.flag){
+                        alert(data.errorMsg);
+                    }else {
+                        alert(data.errorMsg);
+                    }
+                });
+            });
+
+            //接收消息信息
+            $.get("socket/queryMessage",{},function (datas) {
+                var str = "";
+                for (let i = 0; i < datas.length; i++) {
+                    var data = datas[i];
+                    for(var key in data){
+                        str += data[key];
+                        str +="<br/>";
+                    }
+                    $("#content").html(str);
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+
+<!--引入头部-->
+<div id="header"></div>
+
+<div class="box">
+    <div id="message" class="alert alert-danger" ></div>
+    <form action="save.php" method="" style="margin-top: 20px;">
+        <h3>给管理员发送消息：</h3><br/>
+        <textarea id="socketMsg" cols="50" rows="10"></textarea><br/>
+        <table>
+            <tr>
+                <td>
+                    <button type="button" id="btn_sub" class="btn_sub">确定</button>
+                </td>
+                <td>
+                    <input type="reset" class="btn_res" value="重置"  name="reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <h3 style="text-align: center;">消息记录</h3>
+    <div id="content" style="float: left">
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

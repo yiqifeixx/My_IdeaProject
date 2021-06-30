@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>网吧管理系统</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+
+	<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
+	<script src="js/jquery-3.3.1.js"></script>
+
+	<style>
+		.rg_layout{
+			height: 791px;
+			background: url(images/login_bg.png) fixed center 0;
+			background-size: cover;
+		}
+	</style>
+
+
+	<script>
+		$(function () {
+			//1.给登录按钮绑定单击事件
+			$("#btn_sub").click(function () {
+				//2.发送ajax请求，提交表单数据
+				$.post("user/login",$("#loginForm").serialize(),function (data) {
+					//data : {flag:false,errorMsg:''}
+					if(data.flag){
+						//登录成功
+						location.href="index.html";
+					}else{
+						//登录失败
+						$("#errorMsg").html(data.errorMsg);
+					}
+				});
+			});
+		});
+	</script>
+
+
+</head>
+
+<body>
+<!--背景设置-->
+<div class="rg_layout">
+
+<div class="login-box">
+	<div class="title">
+		<span>欢迎登录网吧管理系统</span>
+	</div>
+	<div class="login_inner">
+		<!--登录错误提示消息-->
+		<div id="errorMsg" class="alert alert-danger" ></div>
+		<form id="loginForm" action="" method="post" accept-charset="utf-8">
+			<input type="hidden" name="action" value="login"/>
+			<input name="username" type="text" placeholder="请输入账号" autocomplete="off">
+			<input name="password" type="text" placeholder="请输入密码" autocomplete="off">
+
+			<div class="submit_btn">
+				<button type="button" id="btn_sub" >登录</button>
+			</div>
+		</form>
+		<div class="reg">没有账户？<a href="register.html">立即注册</a></div>
+	</div>
+</div>
+</div>
+</body>
+
+</html>
